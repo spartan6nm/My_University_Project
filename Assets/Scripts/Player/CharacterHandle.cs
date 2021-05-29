@@ -9,9 +9,8 @@ public class CharacterHandle : MonoBehaviour
 
     #region Field Declarations
 
-    [Header("Movement")]
-    Rigidbody2D rigidBody;
 
+    [Header("Movement")]
     public LayerMask groundLayer;
 
     public float speed = 2;
@@ -21,6 +20,8 @@ public class CharacterHandle : MonoBehaviour
     Vector2 direction = new Vector2(0, 0);
 
     bool grounded , moving = false;
+
+    Rigidbody2D rigidBody;
 
 
 
@@ -48,6 +49,8 @@ public class CharacterHandle : MonoBehaviour
 
 
     #region Movement
+
+    // getting input from UI buttons
     public void Left()
     {
 
@@ -73,22 +76,41 @@ public class CharacterHandle : MonoBehaviour
 
     }
 
+
+    // move is done by getting a final number from the sum of left and right UI buttons being peressed
+    // that number is given as the x or horizontal value of a vector 2 direction
     private void Move()
     {
         x = left + right;
-        if (left < 0 || right > 0)
+        if (x < 0 || x > 0)
         {
             moving = true;
+            Facing((int)x);
         } 
-        else if (left == 0 && right == 0)
+        else if (x==0)
         {
             moving = false;
         }
-
+        
         MoveAnimations();
 
         direction = new Vector2(x, 0);
         rigidBody.velocity = direction * speed;
+    }
+
+
+    
+    private void Facing(int direction)
+    {
+        switch (direction)
+        {
+            case -1:
+                transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                break;
+            case 1:
+                transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                break;
+        }
     }
 
     #endregion
