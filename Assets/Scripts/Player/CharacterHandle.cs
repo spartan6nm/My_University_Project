@@ -11,29 +11,48 @@ public class CharacterHandle : MonoBehaviour
 
 
     [Header("Movement")]
-    public LayerMask groundLayer;
-
     public float speed = 2;
 
     float right = 0, left = 0, x = 0;
 
     Vector2 direction = new Vector2(0, 0);
 
-    bool grounded , moving = false;
+    bool moving = false;
 
     Rigidbody2D rigidBody;
+
+    [Header("Jump")]
+    public Transform ground;
+
+    public LayerMask groundLayer;
+
+    public float groundCheckRadius;
+
+    public float JumpPower;
+
 
 
 
     [Header("Animation")]
-    public Animator animator; 
+    public Animator animator;
 
 
 
 
     #endregion
 
- 
+
+    #region Saved Codes as Comment
+    //Debug.Log(GroundCheck());
+
+    //Debug.Log(rigidBody.velocity);
+
+    // getting input from UI buttons
+
+    //Debug.Log("here");
+    #endregion
+
+
     #region Unity ENgine Functions
     private void Awake()
     {
@@ -42,18 +61,23 @@ public class CharacterHandle : MonoBehaviour
 
     private void FixedUpdate()
     {
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Jump();
+        }
         Move();
-        
+        MoveAnimations();
     }
+
     #endregion
 
 
     #region Movement
 
-    // getting input from UI buttons
+    
     public void Left()
     {
-
         left = -1;
     }
 
@@ -71,9 +95,9 @@ public class CharacterHandle : MonoBehaviour
         left = 0;
     }
 
-    public void Jump()
+    public void JumpInput()
     {
-
+        Jump();
     }
 
 
@@ -82,24 +106,23 @@ public class CharacterHandle : MonoBehaviour
     private void Move()
     {
         x = left + right;
-        if (x < 0 || x > 0)
+        
+        if (x != 0)
         {
+            direction = new Vector2(x*speed, rigidBody.velocity.y);
+
             moving = true;
             Facing((int)x);
+            rigidBody.velocity = direction;
         } 
         else if (x==0)
         {
             moving = false;
         }
         
-        MoveAnimations();
-
-        direction = new Vector2(x, 0);
-        rigidBody.velocity = direction * speed;
     }
 
 
-    
     private void Facing(int direction)
     {
         switch (direction)
@@ -113,6 +136,23 @@ public class CharacterHandle : MonoBehaviour
         }
     }
 
+
+    private bool GroundCheck()
+    {
+        return Physics2D.OverlapCircle(ground.position, groundCheckRadius, groundLayer);
+    }
+
+
+    private void Jump()
+    {
+        if (GroundCheck())
+        {
+            rigidBody.velocity = Vector2.up * JumpPower;
+            animator.SetBool("jumping", true);
+        }
+        
+    }
+
     #endregion
 
     #region Animation
@@ -121,6 +161,14 @@ public class CharacterHandle : MonoBehaviour
     {
         animator.SetBool("moving", moving);
         animator.SetFloat("move", x);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "ground")
+        {
+            animator.SetBool("jumping", false);
+        }
     }
 
     #endregion
