@@ -11,6 +11,7 @@ public class Attack : MonoBehaviour
     public LayerMask enemyLayers;
     public float attackRange;
     public Animator animator;
+    private bool canSwingSword = true;
 
     #endregion
 
@@ -19,9 +20,18 @@ public class Attack : MonoBehaviour
 
     public void AttackInput()
     {
-        MeleeAttack();
+        if(canSwingSword)
+        {
+            canSwingSword = false;
+            MeleeAttack();
+        }
+        
     }
 
+    private void CanSwingSword()
+    {
+        canSwingSword = true;
+    }
     #endregion
 
     #region Attack Methods
