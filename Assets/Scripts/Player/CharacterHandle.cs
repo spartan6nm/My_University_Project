@@ -137,8 +137,9 @@ public class CharacterHandle : MonoBehaviour
     }
 
 
-    private bool GroundCheck()
+    public bool GroundCheck()
     {
+
         return Physics2D.OverlapCircle(ground.position, groundCheckRadius, groundLayer);
     }
 
