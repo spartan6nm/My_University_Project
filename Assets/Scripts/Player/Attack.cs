@@ -33,6 +33,11 @@ public class Attack : MonoBehaviour
     {
         canSwingSword = true;
     }
+
+    private void SwingAnimationStart()
+    {
+        Invoke("CanSwingSword", 0.14f);
+    }
     #endregion
 
     #region Attack Methods
