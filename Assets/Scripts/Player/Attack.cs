@@ -19,6 +19,12 @@ public class Attack : MonoBehaviour
 
     #region UI Input
 
+    public void RangeAttackInput()
+    {
+        RangeAttack();
+    }
+
+
     public void AttackInput()
     {
         if(canSwingSword)
@@ -55,7 +61,10 @@ public class Attack : MonoBehaviour
         }
     }
 
+    private void RangeAttack()
+    {
 
+    }
     #endregion
 
 
