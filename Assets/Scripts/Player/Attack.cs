@@ -7,11 +7,18 @@ public class Attack : MonoBehaviour
 
     #region Field Declerations
     [Header("MeleeAttackComponents")]
-    public Transform attackPoint;
-    public LayerMask enemyLayers;
-    public float attackRange;
-    public Animator animator;
+    [SerializeField] private Transform attackPoint;
+    [SerializeField] private LayerMask enemyLayers;
+    [SerializeField] private float attackRange;
+    [SerializeField] private Animator animator;
     private bool canSwingSword = true;
+
+    [Header("RangeAttack")]
+    [SerializeField] private ProjectileController projectileController;
+    [SerializeField] private GameObject projectilePreFab;
+    [SerializeField] private Transform shootingPoint;
+    private bool canDoRange = true; 
+    
 
 
     #endregion
@@ -21,7 +28,11 @@ public class Attack : MonoBehaviour
 
     public void RangeAttackInput()
     {
-        RangeAttack();
+        if(canDoRange)
+        {
+            RangeAttack();
+        }
+        
     }
 
 
@@ -63,7 +74,23 @@ public class Attack : MonoBehaviour
 
     private void RangeAttack()
     {
+        //canDoRange = false;
 
+        animator.SetTrigger("range");
+
+        ProjectileController projectile =
+            Instantiate(projectilePreFab, shootingPoint.position , Quaternion.identity).GetComponent<ProjectileController>();
+
+        projectile.gameObject.layer = LayerMask.NameToLayer("Player");
+        projectile.isPlayers = true;
+        projectile.projectileSpeed = 10;
+        projectile.projectileDirection = transform.right;
+
+    }
+
+    public void EnableRangeAttack()
+    {
+        canDoRange = true;
     }
     #endregion
 
