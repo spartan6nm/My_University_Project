@@ -6,11 +6,14 @@ public class ProjectileController : MonoBehaviour
 {
     #region Field Declarations
 
-    public Vector3 projectileDirection;
-    public float projectileSpeed;
-    public bool isPlayers;
+    [HideInInspector] public Vector3 projectileDirection;
+    [HideInInspector] public LayerMask groundLayer;
+    [HideInInspector] public float projectileSpeed;
+    [HideInInspector] public float deathDelayf;
+    [HideInInspector] public bool isPlayers;
 
     private Rigidbody2D rigidbody;
+    private WaitForSeconds deathDelay;
 
     #endregion
 
@@ -19,7 +22,9 @@ public class ProjectileController : MonoBehaviour
 
     private void Start()
     {
+        deathDelay = new WaitForSeconds(deathDelayf);
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
+        StartCoroutine(Death());
     }
 
     private void Update()
@@ -32,14 +37,37 @@ public class ProjectileController : MonoBehaviour
 
         rigidbody.velocity = projectileDirection * projectileSpeed;
 
-        if (ScreenBounds.OutOfBounds(transform.position))
+    }
+    #endregion
+
+    #region Death
+    IEnumerator Death()
+    {
+        yield return deathDelay;
+        Die();
+    }
+
+    private void Die()
+    {
+        // destroy self, play explosion animation
+
+        Destroy(gameObject);
+
+
+    }
+    #endregion
+
+    #region Trigger Detection
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "ground")
         {
-            //if (isPlayers)
-            //{
-            //  EventBroker.CallProjectileoutOfBounds();
-            //}
-            //Destroy(gameObject);
+            
+            Die();
         }
     }
+
+
     #endregion
 }

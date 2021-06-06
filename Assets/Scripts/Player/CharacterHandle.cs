@@ -11,15 +11,16 @@ public class CharacterHandle : MonoBehaviour
 
 
     [Header("Movement")]
-    public float speed = 2;
+    [SerializeField]private float speed = 2;
 
-    float right = 0, left = 0, x = 0;
+    private float right = 0, left = 0, x = 0;
 
-    Vector2 direction = new Vector2(0, 0);
+    private Vector2 direction = new Vector2(0, 0);
 
-    bool moving = false;
+    private bool moving = false;
 
-    Rigidbody2D rigidBody;
+    private Rigidbody2D rigidBody;
+
 
     [Header("Jump")]
     public Transform ground;
