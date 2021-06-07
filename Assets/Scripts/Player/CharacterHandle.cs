@@ -114,7 +114,7 @@ public class CharacterHandle : MonoBehaviour
 
             moving = true;
             Facing((int)x);
-            rigidBody.velocity = direction;
+            rigidBody.velocity = direction * Time.deltaTime;
         } 
         else if (x==0)
         {

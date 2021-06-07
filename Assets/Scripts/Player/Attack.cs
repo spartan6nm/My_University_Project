@@ -19,6 +19,7 @@ public class Attack : MonoBehaviour
     [SerializeField] private Transform shootingPoint;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float fireCD;
+    [SerializeField] private float projectileSpeed;
     private WaitForSeconds fireCooldown;
     private bool canDoRange = true;
 
@@ -97,9 +98,9 @@ public class Attack : MonoBehaviour
             projectile.gameObject.layer = LayerMask.NameToLayer("Player");
             projectile.groundLayer = groundLayer;
             projectile.isPlayers = true;
-            projectile.projectileSpeed = 10;
             projectile.projectileDirection = transform.right;
             projectile.deathDelayf = 2f;
+            projectile.projectileSpeed = projectileSpeed;
 
             StartCoroutine(FireCooldown()); // start cooldown
         }

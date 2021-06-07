@@ -8,8 +8,8 @@ public class ProjectileController : MonoBehaviour
 
     [HideInInspector] public Vector3 projectileDirection;
     [HideInInspector] public LayerMask groundLayer;
-    [HideInInspector] public float projectileSpeed;
     [HideInInspector] public float deathDelayf;
+    [HideInInspector] public float projectileSpeed;
     [HideInInspector] public bool isPlayers;
 
     private Rigidbody2D rigidbody;
@@ -34,8 +34,7 @@ public class ProjectileController : MonoBehaviour
 
     private void Movement()
     {
-
-        rigidbody.velocity = projectileDirection * projectileSpeed;
+        transform.Translate(projectileDirection * Time.deltaTime * projectileSpeed);
 
     }
     #endregion
