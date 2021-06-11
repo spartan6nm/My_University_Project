@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileController : MonoBehaviour
+public class ProjectileController : MonoBehaviour , IBulletBehave
 {
     #region Field Declarations
 
@@ -11,8 +11,7 @@ public class ProjectileController : MonoBehaviour
     [HideInInspector] public float deathDelayf;
     [HideInInspector] public float projectileSpeed;
     [HideInInspector] public bool isPlayers;
-
-    private Rigidbody2D rigidbody;
+    
     private WaitForSeconds deathDelay;
 
     #endregion
@@ -23,16 +22,15 @@ public class ProjectileController : MonoBehaviour
     private void Start()
     {
         deathDelay = new WaitForSeconds(deathDelayf);
-        rigidbody = gameObject.GetComponent<Rigidbody2D>();
-        StartCoroutine(Death());
+        StartCoroutine(DieCD());
     }
 
     private void Update()
     {
-        Movement();
+        Move();
     }
 
-    private void Movement()
+    public void Move()
     {
         transform.Translate(projectileDirection * Time.deltaTime * projectileSpeed);
 
@@ -40,13 +38,13 @@ public class ProjectileController : MonoBehaviour
     #endregion
 
     #region Death
-    IEnumerator Death()
+    public IEnumerator DieCD()
     {
         yield return deathDelay;
         Die();
     }
 
-    private void Die()
+    public void Die()
     {
         // destroy self, play explosion animation
 

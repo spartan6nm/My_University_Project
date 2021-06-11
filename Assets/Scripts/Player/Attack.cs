@@ -14,12 +14,12 @@ public class Attack : MonoBehaviour
     private bool canSwingSword = true;
 
     [Header("RangeAttack")]
-    [SerializeField] private ProjectileController projectileController;
     [SerializeField] private GameObject projectilePreFab;
     [SerializeField] private Transform shootingPoint;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float fireCD;
     [SerializeField] private float projectileSpeed;
+    private ProjectileController projectileController;
     private WaitForSeconds fireCooldown;
     private bool canDoRange = true;
 
@@ -92,15 +92,15 @@ public class Attack : MonoBehaviour
 
             animator.SetTrigger("range");
 
-            ProjectileController projectile =
+            projectileController =
                 Instantiate(projectilePreFab, shootingPoint.position, Quaternion.identity).GetComponent<ProjectileController>();
 
-            projectile.gameObject.layer = LayerMask.NameToLayer("Player");
-            projectile.groundLayer = groundLayer;
-            projectile.isPlayers = true;
-            projectile.projectileDirection = transform.right;
-            projectile.deathDelayf = 2f;
-            projectile.projectileSpeed = projectileSpeed;
+            projectileController.gameObject.layer = LayerMask.NameToLayer("Player");
+            projectileController.groundLayer = groundLayer;
+            projectileController.isPlayers = true;
+            projectileController.projectileDirection = transform.right;
+            projectileController.deathDelayf = 2f;
+            projectileController.projectileSpeed = projectileSpeed;
 
             StartCoroutine(FireCooldown()); // start cooldown
         }
