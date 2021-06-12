@@ -13,7 +13,7 @@ public class CharacterHandle : MonoBehaviour
     [Header("Movement")]
     [SerializeField]private float speed = 2;
 
-    private float right = 0, left = 0, x = 0;
+    private float right = 0, left = 0, x = 0, X = 0;
 
     private Vector2 direction = new Vector2(0, 0);
 
@@ -30,6 +30,8 @@ public class CharacterHandle : MonoBehaviour
     public float groundCheckRadius;
 
     public float JumpPower;
+
+    private float up = 0;
 
 
 
@@ -62,21 +64,18 @@ public class CharacterHandle : MonoBehaviour
 
     private void FixedUpdate()
     {
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Jump();
-        }
         Move();
         MoveAnimations();
     }
+
+
 
     #endregion
 
 
     #region Movement
 
-    
+
     public void Left()
     {
         left = -1;
@@ -98,6 +97,7 @@ public class CharacterHandle : MonoBehaviour
 
     public void JumpInput()
     {
+        up = 1;
         Jump();
     }
 
@@ -149,7 +149,7 @@ public class CharacterHandle : MonoBehaviour
     {
         if (GroundCheck())
         {
-            rigidBody.velocity = Vector2.up * JumpPower;
+            rigidBody.AddForce(Vector2.up * JumpPower * 1000);
             animator.SetBool("jumping", true);
         }
         
