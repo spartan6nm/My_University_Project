@@ -57,4 +57,22 @@ public class CannonBullet : MonoBehaviour , IBulletBehave
 
     #endregion
 
+    #region Trigger and colliders
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            EventBroker.CallPlayerHitted();
+
+            // play explosion
+
+            Destroy(gameObject);
+
+        }
+    }
+
+
+    #endregion
+
 }

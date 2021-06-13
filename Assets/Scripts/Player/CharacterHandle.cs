@@ -60,6 +60,13 @@ public class CharacterHandle : MonoBehaviour
     private void Awake()
     {
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
+
+        EventBroker.PlayerHited += TakeHit;
+    }
+
+    private void OnDisable()
+    {
+        EventBroker.PlayerHited -= TakeHit;
     }
 
     private void FixedUpdate()
@@ -149,10 +156,19 @@ public class CharacterHandle : MonoBehaviour
     {
         if (GroundCheck())
         {
-            rigidBody.AddForce(Vector2.up * JumpPower * 1000);
+            rigidBody.AddForce(Vector2.up * JumpPower * (moving ?  1500 : 1000));
             animator.SetBool("jumping", true);
         }
         
+    }
+
+
+    private void TakeHit()
+    {
+        animator.SetTrigger("hitted");
+
+        // take hit logic and UI animation
+        // control health UI by sending notification to game manager and calling player took hit there so it can update the UI
     }
 
     #endregion
@@ -167,7 +183,7 @@ public class CharacterHandle : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "ground")
+        if (GroundCheck())
         {
             animator.SetBool("jumping", false);
         }

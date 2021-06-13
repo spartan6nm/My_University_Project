@@ -81,6 +81,7 @@ public class Attack : MonoBehaviour
         foreach (Collider2D enemy in hittedEnemies)
         {
             Debug.Log(enemy.name + " has been hit by sword");
+            EventBroker.CallEnemyHitted();
         }
     }
 
