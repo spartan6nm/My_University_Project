@@ -117,11 +117,11 @@ public class CharacterHandle : MonoBehaviour
         
         if (x != 0)
         {
-            direction = new Vector2(x*speed, rigidBody.velocity.y);
+            direction = new Vector2(x, rigidBody.velocity.y);
 
             moving = true;
             Facing((int)x);
-            rigidBody.velocity = direction * Time.deltaTime;
+            rigidBody.velocity = direction *speed* Time.deltaTime;
         } 
         else if (x==0)
         {
