@@ -65,7 +65,6 @@ public class ProjectileController : MonoBehaviour , IBulletBehave
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
-            EventBroker.CallEnemyHitted();
             Die();
         }
     }

@@ -11,7 +11,9 @@ public class Attack : MonoBehaviour
     [SerializeField] private LayerMask enemyLayers;
     [SerializeField] private float attackRange;
     [SerializeField] private Animator animator;
+    [SerializeField] private float swingCD;
     private bool canSwingSword = true;
+    private WaitForSeconds swingCooldown;
 
     [Header("RangeAttack")]
     [SerializeField] private GameObject projectilePreFab;
@@ -23,7 +25,7 @@ public class Attack : MonoBehaviour
     private WaitForSeconds fireCooldown;
     private bool canDoRange = true;
 
-
+    [SerializeField] private EnemyHealth enemyHealth;
 
     #endregion
 
@@ -31,7 +33,9 @@ public class Attack : MonoBehaviour
 
     private void Start()
     {
+        canSwingSword = true;
         fireCooldown = new WaitForSeconds(fireCD);
+        swingCooldown = new WaitForSeconds(swingCD);
     }
 
     #endregion
@@ -50,11 +54,7 @@ public class Attack : MonoBehaviour
 
     public void AttackInput()
     {
-        if(canSwingSword)
-        {
-            canSwingSword = false;
-            MeleeAttack();
-        }
+        MeleeAttack();
         
     }
 
@@ -74,15 +74,25 @@ public class Attack : MonoBehaviour
 
     private void MeleeAttack()
     {
-        animator.SetTrigger("melee");
-        
-        Collider2D[] hittedEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-
-        foreach (Collider2D enemy in hittedEnemies)
+        if(canSwingSword)
         {
-            Debug.Log(enemy.name + " has been hit by sword");
-            EventBroker.CallEnemyHitted();
+            DisableMeleeAttack();
+            animator.SetTrigger("melee");
+
+            Collider2D[] hittedEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+
+            foreach (Collider2D enemy in hittedEnemies)
+            {
+                enemyHealth = enemy.GetComponent<EnemyHealth>();
+
+                enemyHealth.TakeHit();
+
+                Debug.Log(enemy.name + " has been hit by sword");
+            }
+
+            StartCoroutine(SwingCooldown()); // swing cooldown
         }
+        
     }
 
     private void RangeAttack()
@@ -121,10 +131,27 @@ public class Attack : MonoBehaviour
         canDoRange = true;
     }
 
+    private void DisableMeleeAttack()
+    {
+
+        canSwingSword = false;
+    }
+
+    private void EnableMeleeAttack()
+    {
+
+        canSwingSword = true;
+    }
+
     IEnumerator FireCooldown()
     {
         yield return fireCooldown;
         EnableRangeAttack();
+    }
+    IEnumerator SwingCooldown()
+    {
+        yield return swingCooldown;
+        EnableMeleeAttack();
     }
     #endregion
 

@@ -117,7 +117,7 @@ public class CharacterHandle : MonoBehaviour
         
         if (x != 0)
         {
-            direction = new Vector2(x, rigidBody.velocity.y);
+            direction = new Vector2(x, 0);
 
             moving = true;
             Facing((int)x);
@@ -156,22 +156,17 @@ public class CharacterHandle : MonoBehaviour
     {
         if (GroundCheck())
         {
-            rigidBody.AddForce(Vector2.up * JumpPower * (moving ?  1500 : 1000));
+            rigidBody.AddForce(Vector2.up * JumpPower *  1000);
             animator.SetBool("jumping", true);
         }
         
     }
 
 
-    private void TakeHit()
-    {
-        animator.SetTrigger("hitted");
 
-        // take hit logic and UI animation
-        // control health UI by sending notification to game manager and calling player took hit there so it can update the UI
-    }
 
     #endregion
+
 
     #region Animation
 
@@ -187,6 +182,18 @@ public class CharacterHandle : MonoBehaviour
         {
             animator.SetBool("jumping", false);
         }
+    }
+
+    #endregion
+
+
+    #region Take Hit and Colliders
+    private void TakeHit()
+    {
+        animator.SetTrigger("hitted");
+
+        // take hit logic and UI animation
+        // control health UI by sending notification to game manager and calling player took hit there so it can update the UI
     }
 
     #endregion

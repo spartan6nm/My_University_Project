@@ -5,7 +5,7 @@ public class EventBroker
 {
     public static event Action PlayerHited;
 
-    public static event Action EnemyHitted;
+    public static event Action PlayerDetected;
 
     public static void CallPlayerHitted()
     {
@@ -15,11 +15,11 @@ public class EventBroker
         }
     }
 
-    public static void CallEnemyHitted()
+    public static void CallPlayerDetected()
     {
-        if(EnemyHitted != null)
+        if(PlayerDetected != null)
         {
-            EnemyHitted();
+            PlayerDetected();
         }
     }
 }

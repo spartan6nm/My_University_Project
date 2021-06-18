@@ -23,11 +23,9 @@ public class TurtleCannonFire : MonoBehaviour
     {
         fireCooldown = new WaitForSeconds(fireCD);
         StartCoroutine(FireCooldown());
-        EventBroker.EnemyHitted += TakeHit;
     }
     private void OnDisable()
     {
-        EventBroker.EnemyHitted -= TakeHit;
     }
 
     #endregion
@@ -72,10 +70,7 @@ public class TurtleCannonFire : MonoBehaviour
     #region Hit And Death And Health
 
 
-    private void TakeHit()
-    {
-        animator.SetTrigger("hitted");
-    }
+    
 
     #endregion
 }
