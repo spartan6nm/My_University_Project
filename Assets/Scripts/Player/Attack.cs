@@ -14,6 +14,7 @@ public class Attack : MonoBehaviour
     [SerializeField] private float swingCD;
     private bool canSwingSword = true;
     private WaitForSeconds swingCooldown;
+    private EnemyHealth enemyHealth;
 
     [Header("RangeAttack")]
     [SerializeField] private GameObject projectilePreFab;
@@ -25,7 +26,7 @@ public class Attack : MonoBehaviour
     private WaitForSeconds fireCooldown;
     private bool canDoRange = true;
 
-    [SerializeField] private EnemyHealth enemyHealth;
+    
 
     #endregion
 
@@ -54,10 +55,13 @@ public class Attack : MonoBehaviour
 
     public void AttackInput()
     {
-        MeleeAttack();
-        
-    }
+        if(canSwingSword)
+        {
 
+            MeleeAttack();
+        }   
+    }
+    /*
     private void CanSwingSword()
     {
         canSwingSword = true;
@@ -65,8 +69,9 @@ public class Attack : MonoBehaviour
 
     private void SwingAnimationStart()
     {
-        Invoke("CanSwingSword", 0.14f);
+        Invoke("CanSwingSword", 0.5f);
     }
+    */
     #endregion
 
     #region Attack Methods
@@ -85,7 +90,7 @@ public class Attack : MonoBehaviour
             {
                 enemyHealth = enemy.GetComponent<EnemyHealth>();
 
-                enemyHealth.TakeHit();
+                enemyHealth.TakeHit(1);
 
                 Debug.Log(enemy.name + " has been hit by sword");
             }

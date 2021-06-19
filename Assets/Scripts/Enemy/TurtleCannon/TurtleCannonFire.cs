@@ -53,7 +53,7 @@ public class TurtleCannonFire : MonoBehaviour
     {
         DisableFire();
 
-        animator.SetTrigger("cannonFire");
+        animator.SetTrigger("Fire");
 
         bulletController =
                 Instantiate(bullet, firePoint.position, Quaternion.identity).GetComponent<CannonBullet>();

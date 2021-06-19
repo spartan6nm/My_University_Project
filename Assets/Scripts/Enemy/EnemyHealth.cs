@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
+    [Header("Take Damage")]
+    [SerializeField] private float health;
+    [SerializeField] private float takenDamage;
+
     private Animator animator;
 
 
@@ -14,8 +18,30 @@ public class EnemyHealth : MonoBehaviour
 
 
 
-    public void TakeHit()
+    public void TakeHit(int type)
     {
-        animator.SetTrigger("hitted");
+
+        if(type == 1)
+        {
+            health -= takenDamage;
+        }
+        else
+        {
+            health -= takenDamage * 2;
+        }
+
+        if(health <= 0)
+        {
+            Die();
+        }
+        // do damage
+
+        animator.SetTrigger("TakeHit");
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
     }
 }
+

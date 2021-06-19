@@ -21,6 +21,7 @@ public class CannonBullet : MonoBehaviour , IBulletBehave
 
         deathDelay = new WaitForSeconds(deathDelayf);
 
+        StartCoroutine(DieCD());
     }
 
 
@@ -67,7 +68,7 @@ public class CannonBullet : MonoBehaviour , IBulletBehave
 
             // play explosion
 
-            Destroy(gameObject);
+            Die();
 
         }
     }

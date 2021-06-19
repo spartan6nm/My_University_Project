@@ -6,7 +6,6 @@ public class EventBroker
     public static event Action PlayerHited;
 
     public static event Action PlayerDetected;
-
     public static void CallPlayerHitted()
     {
         if (PlayerHited != null)

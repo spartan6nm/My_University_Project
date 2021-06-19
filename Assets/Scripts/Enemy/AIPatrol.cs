@@ -85,19 +85,7 @@ public class AIPatrol : MonoBehaviour
                 patroling = false;
                 StartCoroutine(Iidle(1));
             }
-
-        } 
-        // detecting player for getting angry
-        if (Physics2D.OverlapCircle(circleDetectionPoint.position, circleRadius + 1, playerLayer) == true && !detected)
-        {
-            detected = true;
-            GetAngry();
-            StartCoroutine(CalmDown());
-        }else // starting to cooldown
-        {
-            detected = false;
         }
-
     }
 
 
@@ -107,14 +95,6 @@ public class AIPatrol : MonoBehaviour
         IdleEnd(facing);
     }
 
-    IEnumerator CalmDown()
-    {
-        yield return new WaitForSeconds(2);
-        if(!detected)
-        {
-            Calm();
-        }
-    }
 
     private void IdleEnd(int facing)
     {
@@ -137,27 +117,15 @@ public class AIPatrol : MonoBehaviour
     #endregion
 
 
-    #region Anger Management
-
-    private void GetAngry()
-    {
-        spRenderer.color = Color.red;
-    }
-
-    private void Calm()
-    {
-        spRenderer.color = Color.white;
-    }
-
-
-    #endregion
-
-
     #region PlayerCollision
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        EventBroker.CallPlayerHitted();
+        if(collision.gameObject.tag == "Player")
+        {
+            EventBroker.CallPlayerHitted();
+        }
+        
     }
 
     #endregion

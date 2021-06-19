@@ -11,7 +11,8 @@ public class ProjectileController : MonoBehaviour , IBulletBehave
     [HideInInspector] public float deathDelayf;
     [HideInInspector] public float projectileSpeed;
     [HideInInspector] public bool isPlayers;
-    
+    private EnemyHealth enemyHealth;
+
     private WaitForSeconds deathDelay;
 
     #endregion
@@ -65,6 +66,9 @@ public class ProjectileController : MonoBehaviour , IBulletBehave
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
+            enemyHealth = collision.GetComponent<EnemyHealth>();
+
+            enemyHealth.TakeHit(2);
             Die();
         }
     }

@@ -13,7 +13,7 @@ public class CharacterHandle : MonoBehaviour
     [Header("Movement")]
     [SerializeField]private float speed = 2;
 
-    private float right = 0, left = 0, x = 0, X = 0;
+    private float right = 0, left = 0, x = 0;
 
     private Vector2 direction = new Vector2(0, 0);
 
@@ -104,7 +104,6 @@ public class CharacterHandle : MonoBehaviour
 
     public void JumpInput()
     {
-        up = 1;
         Jump();
     }
 
@@ -154,10 +153,18 @@ public class CharacterHandle : MonoBehaviour
 
     private void Jump()
     {
+        
         if (GroundCheck())
         {
-            rigidBody.AddForce(Vector2.up * JumpPower *  1000);
-            animator.SetBool("jumping", true);
+            if(x != 0)
+            {
+                rigidBody.AddForce(Vector2.up * JumpPower * 1000 * 4);
+            }
+            else
+            {
+                rigidBody.AddForce(Vector2.up * JumpPower * 1000);
+            }
+            animator.SetBool("Jumping" , true);
         }
         
     }
@@ -176,14 +183,6 @@ public class CharacterHandle : MonoBehaviour
         animator.SetFloat("move", x);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (GroundCheck())
-        {
-            animator.SetBool("jumping", false);
-        }
-    }
-
     #endregion
 
 
@@ -194,6 +193,15 @@ public class CharacterHandle : MonoBehaviour
 
         // take hit logic and UI animation
         // control health UI by sending notification to game manager and calling player took hit there so it can update the UI
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Ground")
+        {
+            animator.SetBool("Jumping", false);
+        }
     }
 
     #endregion
