@@ -31,8 +31,6 @@ public class CharacterHandle : MonoBehaviour
 
     public float JumpPower;
 
-    private float up = 0;
-
 
 
 

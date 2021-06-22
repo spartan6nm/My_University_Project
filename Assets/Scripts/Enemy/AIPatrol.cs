@@ -20,20 +20,14 @@ public class AIPatrol : MonoBehaviour
     private Vector2 direction = Vector2.right;
     public bool patroling;
 
-    [Header("Anger Management")]
-    [SerializeField] private SpriteRenderer spRenderer;
-    [SerializeField] private bool detected;
-
     #endregion
 
     #region Unity funcs
     void Awake()
     {
-        spRenderer = GetComponent<SpriteRenderer>();
 
         patroling = true;
         directionRL = true;
-        detected = false;
     }
 
 

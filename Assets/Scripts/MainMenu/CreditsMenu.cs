@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CreditsMenu : MonoBehaviour
@@ -15,10 +14,6 @@ public class CreditsMenu : MonoBehaviour
     #endregion
 
     #region UI Event Functions
-    public void PlayStart()
-    {
-        SceneManager.LoadScene("1");
-    }
 
     public void CreditsSet()
     {

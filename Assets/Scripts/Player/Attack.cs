@@ -22,6 +22,7 @@ public class Attack : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float fireCD;
     [SerializeField] private float projectileSpeed;
+    [SerializeField] private float projectileLifeTime;
     private ProjectileController projectileController;
     private WaitForSeconds fireCooldown;
     private bool canDoRange = true;
@@ -30,13 +31,30 @@ public class Attack : MonoBehaviour
 
     #endregion
 
-    #region StartUp
+    #region Unity Functions
 
     private void Start()
     {
         canSwingSword = true;
         fireCooldown = new WaitForSeconds(fireCD);
         swingCooldown = new WaitForSeconds(swingCD);
+    }
+    private void LateUpdate()
+    {
+    
+    }
+    private void OnEnable()
+    {
+        StartCoroutine(FireCooldown());
+        StartCoroutine(SwingCooldown());
+    }
+
+    private void OnDisable()
+    {
+
+        StopAllCoroutines();
+        EnableMeleeAttack();
+        EnableRangeAttack();
     }
 
     #endregion
@@ -115,7 +133,7 @@ public class Attack : MonoBehaviour
             projectileController.groundLayer = groundLayer;
             projectileController.isPlayers = true;
             projectileController.projectileDirection = transform.right;
-            projectileController.deathDelayf = 2f;
+            projectileController.deathDelayf = projectileLifeTime;
             projectileController.projectileSpeed = projectileSpeed;
 
             StartCoroutine(FireCooldown()); // start cooldown
