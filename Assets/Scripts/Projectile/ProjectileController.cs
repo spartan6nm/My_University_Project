@@ -59,8 +59,9 @@ public class ProjectileController : MonoBehaviour , IBulletBehave
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.tag =="Ground")
         {
+            Debug.Log("hitted ground");
             // play explosion animation
             Die();
         }

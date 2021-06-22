@@ -6,7 +6,7 @@ public class CannonBullet : MonoBehaviour , IBulletBehave
 {
     #region Field Declarations
 
-    
+    [HideInInspector] public GameObject DeathEffect;
     [HideInInspector] public Vector3 bulletDirection;
     [HideInInspector] public float deathDelayf;
     [HideInInspector] public float bulletSpeed;
@@ -52,6 +52,8 @@ public class CannonBullet : MonoBehaviour , IBulletBehave
     public void Die()
     {
         // destroy self, play explosion animation
+
+        Instantiate(DeathEffect, transform.position, Quaternion.identity);
 
         Destroy(gameObject);
     }

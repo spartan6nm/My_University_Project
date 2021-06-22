@@ -12,6 +12,7 @@ public class TurtleCannonFire : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private float fireCD;
     [SerializeField] private float buletSpeed;
+    [SerializeField] private GameObject DeathEffect;
     private CannonBullet bulletController;
     private WaitForSeconds fireCooldown;
     private bool canDoShoot = true;
@@ -57,7 +58,7 @@ public class TurtleCannonFire : MonoBehaviour
 
         bulletController =
                 Instantiate(bullet, firePoint.position, Quaternion.identity).GetComponent<CannonBullet>();
-
+        bulletController.DeathEffect = DeathEffect;
         bulletController.gameObject.layer = LayerMask.NameToLayer("Enemy");
         bulletController.bulletDirection = -transform.right;
         bulletController.deathDelayf = 2f;

@@ -71,6 +71,7 @@ public class CharacterHandle : MonoBehaviour
 
     private void FixedUpdate()
     {
+        
         Move();
         MoveAnimations();
     }
@@ -158,11 +159,11 @@ public class CharacterHandle : MonoBehaviour
         {
             if(x != 0)
             {
-                rigidBody.AddForce(Vector2.up * JumpPower * 1000 * 4);
+                rigidBody.AddForce(Vector2.up * JumpPower * 400);
             }
             else
             {
-                rigidBody.AddForce(Vector2.up * JumpPower * 1000);
+                rigidBody.velocity = new Vector2(rigidBody.velocity.x, JumpPower);
             }
             animator.SetBool("Jumping" , true);
         }

@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
 
     #region PlayerSpawn
 
-    private void PlayerDied()
+    public void PlayerDied()
     {
         PlayerPrefab.SetActive(false);
         StartCoroutine(SpawnDelay());
