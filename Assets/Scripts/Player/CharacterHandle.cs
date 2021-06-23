@@ -157,7 +157,8 @@ public class CharacterHandle : MonoBehaviour
         {
             if(x != 0)
             {
-                rigidBody.AddForce(Vector2.up * JumpPower * 400);
+                
+                rigidBody.AddForce(Vector2.up * JumpPower * 350);
             }
             else
             {

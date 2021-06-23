@@ -1,11 +1,13 @@
-
+using UnityEngine;
 using System;
 
 public class EventBroker
 {
+    //public static event Transform 
+
     public static event Action PlayerHited;
 
-    public static event Action PlayerDetected;
+    public static event Action<Transform> SpawnPositionChange;
     public static void CallPlayerHitted()
     {
         if (PlayerHited != null)
@@ -14,11 +16,12 @@ public class EventBroker
         }
     }
 
-    public static void CallPlayerDetected()
+    public static void CallSpawnPositionChange(Transform spawnPosition)
     {
-        if(PlayerDetected != null)
+        if(SpawnPositionChange != null)
         {
-            PlayerDetected();
+            SpawnPositionChange(spawnPosition);
         }
     }
+
 }

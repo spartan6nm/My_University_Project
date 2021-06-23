@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     {
         StartHealth();
         EventBroker.PlayerHited += SetHealth;
+        EventBroker.SpawnPositionChange += spawnPositionChanged;
 
         DontDestroyOnLoad(gameObject);
         if (_instance != null && _instance != this)
@@ -44,6 +45,7 @@ public class GameManager : MonoBehaviour
     private void OnDisable()
     {
         EventBroker.PlayerHited -= SetHealth;
+        EventBroker.SpawnPositionChange -= spawnPositionChanged;
     }
 
     #endregion
@@ -96,8 +98,15 @@ public class GameManager : MonoBehaviour
     private void Spawn()
     {
         PlayerPrefab.transform.position = LastSpawnPositiin.position;
+        PlayerPrefab.GetComponent<SpriteRenderer>().color = Color.white;
         StartHealth();
         PlayerPrefab.SetActive(true);
+    }
+
+    private void spawnPositionChanged(Transform spawnPosition)
+    {
+        LastSpawnPositiin = spawnPosition;
+        Debug.LogError(LastSpawnPositiin.position);
     }
     #endregion
 

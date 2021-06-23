@@ -64,7 +64,11 @@ public class CannonBullet : MonoBehaviour , IBulletBehave
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            Die();
+        }
+        else if(collision.gameObject.CompareTag("Player"))
         {
             EventBroker.CallPlayerHitted();
 
@@ -73,6 +77,7 @@ public class CannonBullet : MonoBehaviour , IBulletBehave
             Die();
 
         }
+        
     }
 
 
