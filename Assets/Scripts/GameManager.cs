@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
         EventBroker.PlayerHited += SetHealth;
         EventBroker.SpawnPositionChange += spawnPositionChanged;
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         if (_instance != null && _instance != this)
         {
             Destroy(this.gameObject);
@@ -80,12 +80,17 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
-    #region PlayerSpawn
+    #region PlayerSpawn and Next level
 
     public void PlayerDied()
     {
         PlayerPrefab.SetActive(false);
         StartCoroutine(SpawnDelay());
+    }
+
+    public void GoToNexLevel(int sceneindex)
+    {
+        SceneManager.LoadScene(sceneindex);
     }
 
 
@@ -108,6 +113,8 @@ public class GameManager : MonoBehaviour
         LastSpawnPositiin = spawnPosition;
         Debug.LogError(LastSpawnPositiin.position);
     }
+
+
     #endregion
 
 }
