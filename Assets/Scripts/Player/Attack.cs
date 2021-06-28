@@ -130,7 +130,6 @@ public class Attack : MonoBehaviour
                 Instantiate(projectilePreFab, shootingPoint.position, Quaternion.identity).GetComponent<ProjectileController>();
 
             projectileController.gameObject.layer = LayerMask.NameToLayer("Player");
-            projectileController.groundLayer = groundLayer;
             projectileController.isPlayers = true;
             projectileController.projectileDirection = transform.right;
             projectileController.deathDelayf = projectileLifeTime;

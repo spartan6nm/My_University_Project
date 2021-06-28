@@ -13,7 +13,7 @@ public class CharacterHandle : MonoBehaviour
     [Header("Movement")]
     [SerializeField]private float speed = 2;
 
-    private float right = 0, left = 0, x = 0;
+    private float right = 0, left = 0, x = 0 , maxX = 1 , minX = -1;
 
     private Vector2 direction = new Vector2(0, 0);
 
@@ -30,6 +30,8 @@ public class CharacterHandle : MonoBehaviour
     public float groundCheckRadius;
 
     public float JumpPower;
+
+    private float yVelocity = 0;
 
 
 
@@ -112,10 +114,12 @@ public class CharacterHandle : MonoBehaviour
     private void Move()
     {
         x = left + right;
-        
+
+        KeepXInBounds();
+
         if (x != 0)
         {
-            direction = new Vector2(x, 0);
+            direction = new Vector2(x, yVelocity);
 
             moving = true;
             Facing((int)x);
@@ -128,6 +132,14 @@ public class CharacterHandle : MonoBehaviour
         
     }
 
+    private void KeepXInBounds()
+    {
+        if (x > 1 || x < -1)
+        {
+            x = 0;
+        }
+        
+    }
 
     private void Facing(int direction)
     {
@@ -155,21 +167,29 @@ public class CharacterHandle : MonoBehaviour
         
         if (GroundCheck())
         {
-            if(x != 0)
+            yVelocity = JumpPower * Vector2.up.y;
+            Invoke("ResetYVelocity", 0.2f);
+            
+            if (x != 0)
             {
-                
-                rigidBody.AddForce(Vector2.up * JumpPower * 350);
+                rigidBody.velocity = new Vector2(rigidBody.velocity.x, yVelocity* 0.19f);
+
+                //rigidBody.AddForce(Vector2.up * JumpPower * 350);
             }
             else
             {
-                rigidBody.velocity = new Vector2(rigidBody.velocity.x, JumpPower);
+                rigidBody.velocity = new Vector2(rigidBody.velocity.x, yVelocity * 22);
             }
+            
             animator.SetBool("Jumping" , true);
         }
         
     }
 
-
+    private void ResetYVelocity()
+    {
+        yVelocity = -Vector2.up.y;
+    }
 
 
     #endregion
@@ -198,7 +218,7 @@ public class CharacterHandle : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Ground")
+        if(collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Enemy")
         {
             animator.SetBool("Jumping", false);
         }

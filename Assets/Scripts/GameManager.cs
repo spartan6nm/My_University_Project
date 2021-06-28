@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float playerMaxhealth;
     private float PlayerHealth;
     [SerializeField] private float fixedDamage;
+    [SerializeField] private float playerSpawnTime;
     [SerializeField] private Transform LastSpawnPositiin;
     [SerializeField] private GameObject PlayerPrefab;
 
@@ -96,7 +97,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator SpawnDelay()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(playerSpawnTime);
         Spawn();
     }
 

@@ -71,11 +71,7 @@ public class CannonBullet : MonoBehaviour , IBulletBehave
         else if(collision.gameObject.CompareTag("Player"))
         {
             EventBroker.CallPlayerHitted();
-
-            // play explosion
-
             Die();
-
         }
         
     }

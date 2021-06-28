@@ -6,8 +6,10 @@ public class ProjectileController : MonoBehaviour , IBulletBehave
 {
     #region Field Declarations
 
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private GameObject destroyedEffect;
+
     [HideInInspector] public Vector3 projectileDirection;
-    [HideInInspector] public LayerMask groundLayer;
     [HideInInspector] public float deathDelayf;
     [HideInInspector] public float projectileSpeed;
     [HideInInspector] public bool isPlayers;
@@ -48,25 +50,29 @@ public class ProjectileController : MonoBehaviour , IBulletBehave
     public void Die()
     {
         // destroy self, play explosion animation
+        Instantiate(destroyedEffect, transform.position, Quaternion.identity);
 
         Destroy(gameObject);
 
 
     }
+
+
     #endregion
 
     #region Trigger Detection
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == groundLayer)
+
+        if (collision.gameObject.CompareTag("Ground"))
         {
-            Debug.Log("hitted ground");
-            // play explosion animation
             Die();
         }
-        else if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy"))
         {
+            Debug.Log("hitted Enemy");
             enemyHealth = collision.GetComponent<EnemyHealth>();
 
             enemyHealth.TakeHit(2);
