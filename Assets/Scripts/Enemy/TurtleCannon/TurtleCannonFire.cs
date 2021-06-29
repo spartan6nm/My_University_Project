@@ -39,7 +39,7 @@ public class TurtleCannonFire : MonoBehaviour
         CannonFire();
     }
 
-    private void DisableFire()
+    public void DisableFire()
     {
         StartCoroutine(FireCooldown()); // start cooldown
     }

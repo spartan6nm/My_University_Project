@@ -8,11 +8,20 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private float health;
     [SerializeField] private float takenDamage;
 
+    private TurtleCannonFire turtleScript;
+    private bool isTrurtle = false;
+
     private Animator animator;
 
 
     private void Awake()
     {
+        if(gameObject.GetComponent<TurtleCannonFire>() != null)
+        {
+            turtleScript = gameObject.GetComponent<TurtleCannonFire>();
+            isTrurtle = true;
+        }
+
         animator = GetComponent<Animator>();
     }
 
@@ -36,6 +45,11 @@ public class EnemyHealth : MonoBehaviour
         }
         // do damage
 
+        if (isTrurtle)
+        {
+            turtleScript.StopAllCoroutines();
+            turtleScript.DisableFire();
+        }
         animator.SetTrigger("TakeHit");
     }
 

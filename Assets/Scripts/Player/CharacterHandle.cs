@@ -13,7 +13,7 @@ public class CharacterHandle : MonoBehaviour
     [Header("Movement")]
     [SerializeField]private float speed = 2;
 
-    private float right = 0, left = 0, x = 0 , maxX = 1 , minX = -1;
+    private float right = 0, left = 0, x = 0;
 
     private Vector2 direction = new Vector2(0, 0);
 
