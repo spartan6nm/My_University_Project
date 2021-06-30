@@ -66,7 +66,6 @@ public class GameManager : MonoBehaviour
         PlayerHealth -= fixedDamage;
         healthSlider.value = PlayerHealth;
         CheckHealth();
-        Debug.Log(PlayerHealth +  " Player Health" );
 
     }
 
@@ -74,7 +73,6 @@ public class GameManager : MonoBehaviour
     {
         if(PlayerHealth <= 0)
         {
-            Debug.LogError("Player Died");
             PlayerDied();
         }
     }
@@ -112,7 +110,6 @@ public class GameManager : MonoBehaviour
     private void spawnPositionChanged(Transform spawnPosition)
     {
         LastSpawnPositiin = spawnPosition;
-        Debug.LogError(LastSpawnPositiin.position);
     }
 
 

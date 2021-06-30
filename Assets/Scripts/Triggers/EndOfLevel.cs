@@ -17,7 +17,8 @@ public class EndOfLevel : MonoBehaviour
 
     private int GetNextScene()
     {
-
+        PlayerPrefs.SetInt("level", SceneManager.GetActiveScene().buildIndex+1);
         return SceneManager.GetActiveScene().buildIndex + 1;
+
     }
 }

@@ -109,8 +109,6 @@ public class Attack : MonoBehaviour
                 enemyHealth = enemy.GetComponent<EnemyHealth>();
 
                 enemyHealth.TakeHit(1);
-
-                Debug.Log(enemy.name + " has been hit by sword");
             }
 
             StartCoroutine(SwingCooldown()); // swing cooldown

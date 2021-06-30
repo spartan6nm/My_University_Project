@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CreditsMenu : MonoBehaviour
+public class PanelMenu : MonoBehaviour
 {
 
     #region Field Declerations
-    [SerializeField] private GameObject CreditsPanel;
+    [SerializeField] private GameObject panel;
     [SerializeField] private Animator animator;
     
 
@@ -15,19 +15,19 @@ public class CreditsMenu : MonoBehaviour
 
     #region UI Event Functions
 
-    public void CreditsSet()
+    public void PanelSet()
     {
-        CreditsPanel.SetActive(true);
+        panel.SetActive(true);
     }
 
-    public void CreditsClose()
+    public void PanelClose()
     {
         animator.SetTrigger("Close");
     }
 
     public void Disable()
     {
-        CreditsPanel.SetActive(false);
+        panel.SetActive(false);
     }
     #endregion
 }
