@@ -23,6 +23,7 @@ public class MenuController : MonoBehaviour
         if(!PlayerPrefs.HasKey("level") || PlayerPrefs.GetInt("level") == 1)
         {
             PlayerPrefs.SetInt("level", 1);
+            PlayerPrefs.SetInt("resumelevel", 1);
             mission1.interactable = true;
         }
         else if(PlayerPrefs.GetInt("level") == 2)
@@ -45,7 +46,7 @@ public class MenuController : MonoBehaviour
 
     public void PlayStart()
     {
-        SceneManager.LoadScene(PlayerPrefs.GetInt("level"));
+        SceneManager.LoadScene(PlayerPrefs.GetInt("resumelevel"));
     }
 
     public void Play1()

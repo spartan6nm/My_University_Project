@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
 {
 
     #region Field Field Declarations
+    [Header("Pausemenu")]
+    [SerializeField] private Canvas ControlUI;
+
 
     [Header("PlayerHealth")]
     [SerializeField] private Slider healthSlider;
@@ -21,7 +24,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
-    #region Singleton
+    #region Singleton & Unity Functions
     private static GameManager _instance;
 
     public static GameManager Instance { get { return _instance; } }
@@ -32,6 +35,9 @@ public class GameManager : MonoBehaviour
         StartHealth();
         EventBroker.PlayerHited += SetHealth;
         EventBroker.SpawnPositionChange += spawnPositionChanged;
+
+        PlayerPrefs.SetInt("resumelevel", SceneManager.GetActiveScene().buildIndex);
+
 
         //DontDestroyOnLoad(gameObject);
         if (_instance != null && _instance != this)
@@ -114,5 +120,7 @@ public class GameManager : MonoBehaviour
 
 
     #endregion
+
+
 
 }
