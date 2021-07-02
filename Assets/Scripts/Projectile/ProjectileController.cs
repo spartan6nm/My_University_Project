@@ -8,11 +8,13 @@ public class ProjectileController : MonoBehaviour , IBulletBehave
 
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private GameObject destroyedEffect;
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
     [HideInInspector] public Vector3 projectileDirection;
     [HideInInspector] public float deathDelayf;
     [HideInInspector] public float projectileSpeed;
     [HideInInspector] public bool isPlayers;
+    [HideInInspector] public bool facing;
     private EnemyHealth enemyHealth;
 
     private WaitForSeconds deathDelay;
@@ -25,6 +27,7 @@ public class ProjectileController : MonoBehaviour , IBulletBehave
     private void Start()
     {
         deathDelay = new WaitForSeconds(deathDelayf);
+        spriteRenderer.flipX = facing;
         StartCoroutine(DieCD());
     }
 

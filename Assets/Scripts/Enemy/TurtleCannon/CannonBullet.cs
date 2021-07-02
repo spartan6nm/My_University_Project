@@ -5,11 +5,13 @@ using UnityEngine;
 public class CannonBullet : MonoBehaviour , IBulletBehave
 {
     #region Field Declarations
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
     [HideInInspector] public GameObject DeathEffect;
     [HideInInspector] public Vector3 bulletDirection;
     [HideInInspector] public float deathDelayf;
     [HideInInspector] public float bulletSpeed;
+    [HideInInspector] public bool facing;
     private WaitForSeconds deathDelay;
 
     #endregion
@@ -18,8 +20,9 @@ public class CannonBullet : MonoBehaviour , IBulletBehave
 
     private void Start()
     {
-
+        spriteRenderer.flipX = facing;
         deathDelay = new WaitForSeconds(deathDelayf);
+
 
         StartCoroutine(DieCD());
     }

@@ -7,6 +7,7 @@ public class EnemyHealth : MonoBehaviour
     [Header("Take Damage")]
     [SerializeField] private float health;
     [SerializeField] private float takenDamage;
+    [SerializeField] private AudioManager audioManager;
 
     private TurtleCannonFire turtleScript;
     private bool isTrurtle = false;
@@ -55,6 +56,11 @@ public class EnemyHealth : MonoBehaviour
 
     private void Die()
     {
+        if (isTrurtle)
+            audioManager.Play("TurtleDead");
+        else
+            audioManager.Play("BatDead");
+            
         Destroy(gameObject);
     }
 }

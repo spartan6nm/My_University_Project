@@ -8,6 +8,7 @@ public class TurtleCannonFire : MonoBehaviour
     #region Field Declerations
     [Header("Cannon Fire")]
     [SerializeField] private GameObject bullet;
+    [SerializeField] private AudioManager audioManager;
     [SerializeField] private Transform firePoint;
     [SerializeField] private Animator animator;
     [SerializeField] private float fireCD;
@@ -54,11 +55,16 @@ public class TurtleCannonFire : MonoBehaviour
     {
         DisableFire();
 
+
+        audioManager.Play("TurtleCannonFire");
         animator.SetTrigger("Fire");
 
         bulletController =
                 Instantiate(bullet, firePoint.position, Quaternion.identity).GetComponent<CannonBullet>();
         bulletController.DeathEffect = DeathEffect;
+
+        bulletController.facing = (gameObject.transform.rotation.y > 0 ? true : false);
+
         bulletController.gameObject.layer = LayerMask.NameToLayer("Enemy");
         bulletController.bulletDirection = -transform.right;
         bulletController.deathDelayf = bulletLifeTime;

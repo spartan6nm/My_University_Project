@@ -27,7 +27,9 @@ public class Attack : MonoBehaviour
     private WaitForSeconds fireCooldown;
     private bool canDoRange = true;
 
-    
+
+    [SerializeField] private AudioManager audioManager;
+
 
     #endregion
 
@@ -63,11 +65,12 @@ public class Attack : MonoBehaviour
 
     public void RangeAttackInput()
     {
-        if(canDoRange)
+        if (canDoRange)
         {
             RangeAttack();
         }
-        
+        else
+            audioManager.Play("CantUseSpell");
     }
 
 
@@ -100,6 +103,7 @@ public class Attack : MonoBehaviour
         if(canSwingSword)
         {
             DisableMeleeAttack();
+            audioManager.Play("Slash");
             animator.SetTrigger("melee");
 
             Collider2D[] hittedEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
@@ -121,14 +125,18 @@ public class Attack : MonoBehaviour
         if(canDoRange)
         {
             DisableRangeAttack();
-
+            audioManager.Play("FireBullShoot");
             animator.SetTrigger("range");
 
             projectileController =
                 Instantiate(projectilePreFab, shootingPoint.position, Quaternion.identity).GetComponent<ProjectileController>();
-
+            
             projectileController.gameObject.layer = LayerMask.NameToLayer("Player");
             projectileController.isPlayers = true;
+
+            projectileController.facing = (gameObject.transform.rotation.y < 0 ? true : false);
+
+
             projectileController.projectileDirection = transform.right;
             projectileController.deathDelayf = projectileLifeTime;
             projectileController.projectileSpeed = projectileSpeed;

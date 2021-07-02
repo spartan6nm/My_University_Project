@@ -9,7 +9,7 @@ public class AIPatrol : MonoBehaviour
 
     #region Field Declarations
     [Header("Movement")]
-    [SerializeField] private Rigidbody2D rigidbody;
+    [SerializeField] private new Rigidbody2D rigidbody;
     [SerializeField] private Transform circleDetectionPoint;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float circleRadius;

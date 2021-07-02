@@ -4,9 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MenuController : MonoBehaviour
+public class MenuController : MonoBehaviour , IUiSoundPlayer
 {
     #region Field Declarations
+
+    [Header("Audio")]
+    [SerializeField] private AudioManager audioManager;
 
     [Header("UI")]
     [SerializeField] private Button mission1;
@@ -20,6 +23,7 @@ public class MenuController : MonoBehaviour
 
     private void Awake()
     {
+
         if(!PlayerPrefs.HasKey("level") || PlayerPrefs.GetInt("level") == 1)
         {
             PlayerPrefs.SetInt("level", 1);
@@ -37,8 +41,12 @@ public class MenuController : MonoBehaviour
             mission2.interactable = true;
             mission3.interactable = true;
         }
+        
     }
-
+    private void Start()
+    {
+        audioManager.Play("SoundTrack");
+    }
     #endregion
 
 
@@ -46,20 +54,29 @@ public class MenuController : MonoBehaviour
 
     public void PlayStart()
     {
+        audioManager.Play("UiClick");
         SceneManager.LoadScene(PlayerPrefs.GetInt("resumelevel"));
     }
 
     public void Play1()
     {
+        ClickSound();
         SceneManager.LoadScene(1);
     }
     public void Play2()
     {
+        ClickSound();
         SceneManager.LoadScene(2);
     }
     public void Play3()
     {
+        ClickSound();
         SceneManager.LoadScene(3);
+    }
+
+    public void ClickSound()
+    {
+        audioManager.Play("UiClick");
     }
     #endregion
 }

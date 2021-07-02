@@ -8,6 +8,10 @@ public class GameManager : MonoBehaviour
 {
 
     #region Field Field Declarations
+
+    [Header("Pausemenu")]
+    [SerializeField] private AudioManager audioManager;
+
     [Header("Pausemenu")]
     [SerializeField] private Canvas ControlUI;
 
@@ -49,6 +53,17 @@ public class GameManager : MonoBehaviour
             _instance = this;
         }
     }
+
+    private void Start()
+    {
+        audioManager.Play("SoundTrack");
+
+        if(SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            audioManager.Play("Dialog1");
+        }
+    }
+
     private void OnDisable()
     {
         EventBroker.PlayerHited -= SetHealth;
@@ -69,6 +84,7 @@ public class GameManager : MonoBehaviour
 
     private void SetHealth()
     {
+        audioManager.Play("PlayerHit");
         PlayerHealth -= fixedDamage;
         healthSlider.value = PlayerHealth;
         CheckHealth();
@@ -89,6 +105,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayerDied()
     {
+        audioManager.Play("PlayerDied");
         PlayerPrefab.SetActive(false);
         StartCoroutine(SpawnDelay());
     }
@@ -111,6 +128,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefab.GetComponent<SpriteRenderer>().color = Color.white;
         StartHealth();
         PlayerPrefab.SetActive(true);
+        audioManager.Play("RespawnDialog"); 
     }
 
     private void spawnPositionChanged(Transform spawnPosition)

@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class pause : MonoBehaviour
+public class pause : MonoBehaviour , IUiSoundPlayer
 {
     #region Field Field Declarations
+
+    [Header("Audio")]
+    [SerializeField] private AudioManager audioManager;
+
+
     [Header("Pausemenu")]
     [SerializeField] private Canvas ControlUI;
     public static bool isPaused;
@@ -28,20 +33,28 @@ public class pause : MonoBehaviour
     }
     public void Resume()
     {
+        ClickSound();
         isPaused = false;
         Time.timeScale = 1.0f;
         ControlUI.gameObject.SetActive(true);
     }
     public void RestartLevel()
     {
+        ClickSound();
         Time.timeScale = 1.0f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void MainMenu()
     {
+        ClickSound();
         Time.timeScale = 1.0f;
         SceneManager.LoadScene(0);
+    }
+
+    public void ClickSound()
+    {
+        audioManager.Play("UiClick");
     }
     #endregion
 }

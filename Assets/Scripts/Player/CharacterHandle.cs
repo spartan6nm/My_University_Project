@@ -34,6 +34,7 @@ public class CharacterHandle : MonoBehaviour
     private float yVelocity = 0;
 
 
+    [SerializeField] private AudioManager audioManager;
 
 
     [Header("Animation")]
@@ -167,6 +168,7 @@ public class CharacterHandle : MonoBehaviour
         
         if (GroundCheck())
         {
+            audioManager.Play("Jump");
             yVelocity = JumpPower * Vector2.up.y;
             Invoke("ResetYVelocity", 0.2f);
             
@@ -220,6 +222,7 @@ public class CharacterHandle : MonoBehaviour
     {
         if(collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Enemy")
         {
+            audioManager.Play("Land");
             animator.SetBool("Jumping", false);
         }
     }
