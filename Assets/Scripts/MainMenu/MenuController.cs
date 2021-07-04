@@ -58,6 +58,12 @@ public class MenuController : MonoBehaviour , IUiSoundPlayer
         SceneManager.LoadScene(PlayerPrefs.GetInt("resumelevel"));
     }
 
+    public void Quit()
+    {
+        audioManager.Play("UiClick");
+        Application.Quit();
+    }
+
     public void Play1()
     {
         ClickSound();

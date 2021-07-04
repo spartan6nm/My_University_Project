@@ -75,7 +75,6 @@ public class ProjectileController : MonoBehaviour , IBulletBehave
         }
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("hitted Enemy");
             enemyHealth = collision.GetComponent<EnemyHealth>();
 
             enemyHealth.TakeHit(2);
